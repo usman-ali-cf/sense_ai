@@ -153,4 +153,3 @@ export function FileUpload({ onUploadSuccess }: { onUploadSuccess: () => void })
     </div>
   )
 }
-

@@ -84,7 +84,7 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
 
   const header = (
     <header className="m-auto flex max-w-96 flex-col gap-5 text-center">
-      <h1 className="text-2xl font-semibold leading-none tracking-tight">Sense AI</h1>
+      <h1 className="text-2xl font-semibold leading-none tracking-tight">Document AI Chatbot</h1>
       <p className="text-muted-foreground text-sm">
         Upload documents and chat with an AI that can answer questions about your files.
       </p>
@@ -156,4 +156,3 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
     </main>
   )
 }
-

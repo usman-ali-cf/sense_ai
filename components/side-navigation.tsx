@@ -49,4 +49,3 @@ export function SideNavigation({ activeTab, onTabChange }: SideNavigationProps) 
     </div>
   )
 }
-

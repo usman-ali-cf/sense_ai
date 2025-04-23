@@ -106,4 +106,3 @@ export function UrlSubmission({ onSubmitSuccess }: UrlSubmissionProps) {
     </div>
   )
 }
-

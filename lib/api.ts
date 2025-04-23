@@ -110,4 +110,3 @@ export async function submitUrl(url: string): Promise<Document> {
 
   return response.json()
 }
-

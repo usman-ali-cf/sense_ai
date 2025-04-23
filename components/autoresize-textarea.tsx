@@ -37,4 +37,3 @@ export function AutoResizeTextarea({ className, value, onChange, ...props }: Aut
     />
   )
 }
-

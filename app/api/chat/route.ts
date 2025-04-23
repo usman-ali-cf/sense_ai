@@ -7,7 +7,6 @@ export async function POST(req: Request) {
   // Extract the session ID and messages from the request body
   const sessionId = body.session_ids
   const messages = body.messages || []
-  const message = messages[messages.length - 1].content
 
   try {
     console.log("Sending chat request to backend with session ID:", sessionId)
@@ -18,8 +17,8 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        session_id: sessionId || "general", // Use "general" as fallback if no session ID
-        message,
+        messages: messages,
+        session_ids: sessionId,
       }),
     })
 
@@ -47,4 +46,3 @@ export async function POST(req: Request) {
     )
   }
 }
-

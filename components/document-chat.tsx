@@ -1,4 +1,3 @@
-// Update the chat bubbles to use our new color scheme
 "use client"
 
 import type React from "react"
@@ -15,10 +14,18 @@ import { cn } from "@/lib/utils"
 interface DocumentChatProps {
   sessionId: string
   documentId: string
+  documentName?: string
   onBack: () => void
+  embedded?: boolean
 }
 
-export function DocumentChat({ sessionId, documentId, onBack }: DocumentChatProps) {
+export function DocumentChat({
+  sessionId,
+  documentId,
+  documentName = "Document",
+  onBack,
+  embedded = false,
+}: DocumentChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -30,10 +37,10 @@ export function DocumentChat({ sessionId, documentId, onBack }: DocumentChatProp
     setMessages([
       {
         role: "assistant",
-        content: "I'm ready to answer questions about your document. What would you like to know?",
+        content: `I'm ready to answer questions about "${documentName}". What would you like to know?`,
       },
     ])
-  }, [sessionId])
+  }, [sessionId, documentName])
 
   useEffect(() => {
     scrollToBottom()
@@ -62,7 +69,6 @@ export function DocumentChat({ sessionId, documentId, onBack }: DocumentChatProp
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-session-id": sessionId, // Include the session ID in the headers
         },
         body: JSON.stringify({
           messages: [userMessage], // Just send the current message
@@ -107,12 +113,19 @@ export function DocumentChat({ sessionId, documentId, onBack }: DocumentChatProp
   return (
     <TooltipProvider>
       <div className="flex h-full flex-col bg-secondary text-white">
-        <div className="flex items-center gap-2 border-b border-gray-800 p-4">
-          <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:bg-gray-800">
-            <ArrowLeftIcon size={16} />
-          </Button>
-          <h2 className="text-lg font-semibold">Document Chat</h2>
-        </div>
+        {!embedded && (
+          <div className="flex items-center gap-2 border-b border-gray-800 p-4">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:bg-gray-800">
+              <ArrowLeftIcon size={16} />
+            </Button>
+            <h2 className="text-lg font-semibold truncate">{documentName}</h2>
+          </div>
+        )}
+        {embedded && (
+          <div className="border-b border-gray-800 p-4">
+            <h2 className="text-lg font-semibold text-center truncate">{documentName}</h2>
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
@@ -148,7 +161,7 @@ export function DocumentChat({ sessionId, documentId, onBack }: DocumentChatProp
             onKeyDown={handleKeyDown}
             onChange={(v) => setInput(v)}
             value={input}
-            placeholder="Ask a question about your document..."
+            placeholder={`Ask a question about "${documentName}"...`}
             className="placeholder:text-gray-400 flex-1 bg-transparent focus:outline-none text-white"
             disabled={isLoading}
           />
@@ -171,4 +184,3 @@ export function DocumentChat({ sessionId, documentId, onBack }: DocumentChatProp
     </TooltipProvider>
   )
 }
-
